@@ -1,39 +1,71 @@
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
+* { box-sizing: border-box; }
 body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: #0a0a12;
+    font-family: 'Segoe UI', sans-serif;
+    background: #0d0d15;
     color: white;
     margin: 0;
     padding: 15px;
     display: flex;
     justify-content: center;
 }
-
 .container {
-    background: #161625;
+    background: #1a1a2e;
     padding: 20px;
     border-radius: 20px;
     width: 100%;
-    max-width: 450px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    max-width: 480px;
+    text-align: center;
 }
-
-h1 { font-size: 1.4rem; color: #00d2ff; margin-bottom: 20px; }
-
 .menu-botoes {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
     justify-content: center;
     margin-bottom: 20px;
 }
-
 button {
-    padding: 10px 14px;
+    padding: 8px 12px;
     border: 1px solid #333;
-    border-radius: 8px;
+    border-radius: 6px;
     background: #252538;
+    color: #eee;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+button.active { background: #00d2ff; color: #000; font-weight: bold; }
+.input-area input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 8px;
+    background: #000;
+    color: #00d2ff;
+    border: 1px solid #444;
+    border-radius: 8px;
+}
+.btn-gerar {
+    background: #00c853;
+    color: white;
+    width: 100%;
+    padding: 15px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.resultado { display: flex; flex-direction: column; gap: 15px; }
+.box {
+    background: #fff;
+    padding: 15px;
+    border-radius: 15px;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#qrcode-canvas img { width: 150px; height: 150px; }
+.barcode-container { width: 100%; display: flex; justify-content: center; overflow: hidden; }
+#barcode { max-width: 100%; }
+.btn-download { background: #1976d2; color: white; width: 100%; margin-top: 10px; padding: 10px; border: none; }
     color: #ccc;
     font-size: 0.8rem;
     cursor: pointer;
