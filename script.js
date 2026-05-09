@@ -1,5 +1,4 @@
 let modoAtual = 'texto';
-const qrcodeContainer = document.getElementById("qrcode-canvas");
 
 function configurar(modo) {
     modoAtual = modo;
@@ -7,33 +6,58 @@ function configurar(modo) {
     document.querySelectorAll('.menu-botoes button').forEach(b => b.classList.remove('active'));
     document.getElementById(`btn-${modo}`).classList.add('active');
     
-    let html = "";
-    switch(modo) {
-        case 'texto': html = `<input type="text" id="val1" placeholder="Nome ou Texto">`; break;
-        case 'pix': html = `
-            <input type="text" id="val1" placeholder="Chave PIX">
-            <input type="text" id="val2" placeholder="Nome do Recebedor">
-            <input type="text" id="val3" placeholder="Cidade">`; break;
-        case 'wifi': html = `<input type="text" id="val1" placeholder="SSID"><input type="password" id="val2" placeholder="Senha">`; break;
-        case 'whatsapp': html = `<input type="text" id="val1" placeholder="5511999999999">`; break;
-        case 'linkedin': html = `<input type="text" id="val1" placeholder="Usuário LinkedIn">`; break;
-        case 'facebook': html = `<input type="text" id="val1" placeholder="Usuário Facebook">`; break;
-        case 'instagram': html = `<input type="text" id="val1" placeholder="@usuario">`; break;
-        case 'email': html = `<input type="email" id="val1" placeholder="Email"><input type="text" id="val2" placeholder="Assunto">`; break;
-    }
-    container.innerHTML = html;
+    let placeholder = "Digite aqui...";
+    if(modo === 'pix') placeholder = "Chave PIX";
+    if(modo === 'whatsapp') placeholder = "5511999999999";
+    
+    container.innerHTML = `<input type="text" id="val1" placeholder="${placeholder}">`;
 }
 
 function gerarTudo() {
-    const val1 = document.getElementById('val1')?.value.trim();
-    const val2 = document.getElementById('val2')?.value.trim();
-    const val3 = document.getElementById('val3')?.value.trim();
-    
-    if (!val1) return alert("Preencha o campo!");
+    const val1 = document.getElementById('val1').value.trim();
+    if (!val1) return alert("Digite algo!");
 
-    let conteudoQR = "";
-    switch(modoAtual) {
-        case 'texto': conteudoQR = val1; break;
+    // Limpa o QR Code anterior antes de gerar
+    const qrDiv = document.getElementById("qrcode-canvas");
+    qrDiv.innerHTML = "";
+    
+    new QRCode(qrDiv, { text: val1, width: 140, height: 140 });
+
+    // Gera o código de barras
+    JsBarcode("#barcode", val1.substring(0, 20), {
+        format: "CODE128",
+        width: 1.5,
+        height: 40,
+        displayValue: true
+    });
+}
+
+function downloadQR() {
+    const img = document.querySelector("#qrcode-canvas img");
+    if (!img) return;
+    const link = document.createElement("a");
+    link.href = img.src;
+    link.download = "qr.png";
+    link.click();
+}
+
+function downloadBarcode() {
+    const svg = document.getElementById("barcode");
+    const xml = new XMLSerializer().serializeToString(svg);
+    const svg64 = btoa(unescape(encodeURIComponent(xml)));
+    const canvas = document.createElement("canvas");
+    const image = new Image();
+    image.src = 'data:image/svg+xml;base64,' + svg64;
+    image.onload = () => {
+        canvas.width = image.width;
+        canvas.height = image.height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        const link = document.createElement("a");
+        link.href = canvas.toDataURL("image/png");
+        link.download = "barras.png";
+        link.click();
+    };
+}
         case 'pix': 
             const nome = (val2 || "RECEBEDOR").substring(0, 25).toUpperCase();
             const cidade = (val3 || "CIDADE").substring(0, 15).toUpperCase();
