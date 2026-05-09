@@ -1,4 +1,5 @@
 let modoAtual = 'texto';
+let qrCodeInstance = null; // controle para evitar duplicação
 
 function configurar(modo) {
     modoAtual = modo;
@@ -27,7 +28,7 @@ function gerarTudo() {
     if (!v1) return alert("Preencha o campo!");
 
     const qrDiv = document.getElementById("qrcode-canvas");
-    qrDiv.innerHTML = ""; // LIMPEZA ANTI-DUPLICAÇÃO
+    qrDiv.innerHTML = ""; // limpa antes de gerar novo
 
     let link = v1;
     if(modoAtual === 'whatsapp') link = `https://wa.me/${v1.replace(/\D/g,'')}`;
@@ -35,6 +36,22 @@ function gerarTudo() {
     if(modoAtual === 'facebook') link = `https://facebook.com/${v1}`;
     if(modoAtual === 'instagram') link = `https://instagram.com/${v1.replace('@','')}`;
     if(modoAtual === 'email') link = `mailto:${v1}?subject=${encodeURIComponent(v2 || '')}`;
+    if(modoAtual === 'wifi') link = `WIFI:T:WPA;S:${v1};P:${v2};;`;
+    if(modoAtual === 'pix') {
+        const n = (v2 || "RECEBEDOR").toUpperCase().substring(0,25);
+        const c = (v3 || "CIDADE").toUpperCase().substring(0,15);
+        link = `00020126330014BR.GOV.BCB.PIX0111${v1}5204000053039865802BR59${n.length.toString().padStart(2,'0')}${n}60${c.length.toString().padStart(2,'0')}${c}62070503***6304`;
+    }
+
+    // QR Code sem duplicação
+    qrCodeInstance = new QRCode(qrDiv, { text: link, width: 150, height: 150 });
+
+    // Barcode sem duplicação
+    const barcodeSvg = document.getElementById("barcode");
+    barcodeSvg.innerHTML = ""; // limpa antes de gerar novo
+    JsBarcode(barcodeSvg, v1.substring(0, 20), {
+        format: "CODE128", width: 1.5, height: 50, displayValue: true
+    });    if(modoAtual === 'email') link = `mailto:${v1}?subject=${encodeURIComponent(v2 || '')}`;
     if(modoAtual === 'wifi') link = `WIFI:T:WPA;S:${v1};P:${v2};;`;
     if(modoAtual === 'pix') {
         const n = (v2 || "RECEBEDOR").toUpperCase().substring(0,25);
