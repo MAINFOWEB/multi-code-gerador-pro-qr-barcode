@@ -1,39 +1,102 @@
+* { box-sizing: border-box; }
+
 body {
-    font-family: 'Segoe UI', sans-serif;
+    font-family: sans-serif;
     background: #0f0f1a;
     color: white;
     margin: 0;
+    padding: 10px;
     display: flex;
     justify-content: center;
-    padding: 20px;
-    min-height: 100vh;
+    overflow-x: hidden; /* Impede a barra de rolagem lateral */
 }
 
 .container {
     background: #1a1a2e;
-    padding: 20px;
+    padding: 15px;
     border-radius: 15px;
     width: 100%;
-    max-width: 600px; /* Limita o tamanho no PC */
-    box-sizing: border-box;
+    max-width: 500px;
     text-align: center;
 }
 
 .menu-botoes {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 5px;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 button {
-    padding: 8px 12px;
+    padding: 8px;
     border-radius: 5px;
     border: 1px solid #444;
     background: #2a2a40;
     color: white;
+    font-size: 0.75rem;
     cursor: pointer;
+}
+
+button.active { background: #00d2ff; color: #000; }
+
+.input-area input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    background: #000;
+    color: #00d2ff;
+    border: 1px solid #333;
+    border-radius: 5px;
+}
+
+.btn-gerar {
+    background: #00c853;
+    color: white;
+    width: 100%;
+    padding: 12px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.resultado {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.box {
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.box h3 { font-size: 0.8rem; margin: 0 0 10px 0; }
+
+#qrcode-canvas { padding: 5px; }
+#qrcode-canvas img { max-width: 140px; }
+
+.barcode-container { 
+    width: 100%; 
+    overflow: hidden; 
+    display: flex; 
+    justify-content: center; 
+}
+
+#barcode { max-width: 100%; height: auto; }
+
+.btn-download {
+    background: #1976d2;
+    width: 100%;
+    margin-top: 10px;
+    font-size: 0.75rem;
+}
     font-size: 0.8rem;
 }
 
