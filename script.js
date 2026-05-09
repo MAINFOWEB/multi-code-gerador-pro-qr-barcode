@@ -1,4 +1,5 @@
 let modoAtual = 'texto';
+const qrcodeContainer = document.getElementById("qrcode-canvas");
 
 function configurar(modo) {
     modoAtual = modo;
@@ -8,32 +9,81 @@ function configurar(modo) {
     
     let html = "";
     switch(modo) {
-        case 'texto': html = `<input type="text" id="v1" placeholder="Texto ou Nome">`; break;
-        case 'pix': html = `<input type="text" id="v1" placeholder="Chave PIX"><input type="text" id="v2" placeholder="Nome"><input type="text" id="v3" placeholder="Cidade">`; break;
-        case 'whatsapp': html = `<input type="text" id="v1" placeholder="Ex: 5511999999999">`; break;
-        case 'wifi': html = `<input type="text" id="v1" placeholder="Nome da Rede"><input type="password" id="v2" placeholder="Senha">`; break;
-        case 'linkedin': html = `<input type="text" id="v1" placeholder="Usuário LinkedIn">`; break;
-        case 'facebook': html = `<input type="text" id="v1" placeholder="Usuário Facebook">`; break;
-        case 'instagram': html = `<input type="text" id="v1" placeholder="@usuario">`; break;
-        case 'email': html = `<input type="email" id="v1" placeholder="E-mail"><input type="text" id="v2" placeholder="Assunto">`; break;
+        case 'texto': html = `<input type="text" id="val1" placeholder="Digite seu nome ou texto...">`; break;
+        case 'wifi': html = `
+            <input type="text" id="val1" placeholder="Nome da Rede (SSID)">
+            <input type="password" id="val2" placeholder="Senha da Rede">`; break;
+        case 'whatsapp': html = `<input type="text" id="val1" placeholder="Ex: 5511999999999">`; break;
+        case 'linkedin': html = `<input type="text" id="val1" placeholder="Usuário do LinkedIn">`; break;
+        case 'facebook': html = `<input type="text" id="val1" placeholder="Usuário do Facebook">`; break;
+        case 'instagram': html = `<input type="text" id="val1" placeholder="Usuário do Instagram">`; break;
+        case 'email': html = `
+            <input type="email" id="val1" placeholder="Endereço de e-mail">
+            <input type="text" id="val2" placeholder="Assunto (opcional)">`; break;
     }
     container.innerHTML = html;
 }
 
 function gerarTudo() {
-    const v1 = document.getElementById('v1')?.value.trim();
-    const v2 = document.getElementById('v2')?.value.trim();
-    const v3 = document.getElementById('v3')?.value.trim();
-    if (!v1) return alert("Preencha o campo!");
+    const val1 = document.getElementById('val1')?.value;
+    const val2 = document.getElementById('val2')?.value;
+    if (!val1) return alert("Por favor, preencha o campo principal!");
 
-    // LIMPA QR CODE ANTES DE GERAR
-    const qrDiv = document.getElementById("qrcode-canvas");
-    qrDiv.innerHTML = "";
+    let conteudoQR = "";
+    switch(modoAtual) {
+        case 'texto': conteudoQR = val1; break;
+        case 'wifi': conteudoQR = `WIFI:T:WPA;S:${val1};P:${val2};;`; break;
+        case 'whatsapp': conteudoQR = `https://wa.me/${val1.replace(/\D/g,'')}`; break;
+        case 'linkedin': conteudoQR = `https://www.linkedin.com/in/${val1}`; break;
+        case 'facebook': conteudoQR = `https://www.facebook.com/${val1}`; break;
+        case 'instagram': conteudoQR = `https://www.instagram.com/${val1}`; break;
+        case 'email': conteudoQR = `mailto:${val1}?subject=${encodeURIComponent(val2 || '')}`; break;
+    }
 
-    let link = v1;
-    if(modoAtual === 'whatsapp') link = `https://wa.me/${v1.replace(/\D/g,'')}`;
-    if(modoAtual === 'linkedin') link = `https://linkedin.com/in/${v1}`;
-    if(modoAtual === 'facebook') link = `https://facebook.com/${v1}`;
+    // Gerar QR Code
+    qrcodeContainer.innerHTML = "";
+    new QRCode(qrcodeContainer, { text: conteudoQR, width: 160, height: 160 });
+
+    // Gerar Código de Barras (Formatado para aceitar caracteres de URL se necessário)
+    try {
+        JsBarcode("#barcode", val1.substring(0, 30), { // Barras limitadas a 30 caracteres para leitura
+            format: "CODE128",
+            lineColor: "#000",
+            width: 1.5,
+            height: 60,
+            displayValue: true
+        });
+    } catch(e) {
+        console.error("Erro ao gerar barras: dado muito longo ou incompatível.");
+    }
+}
+
+function downloadQR() {
+    const img = qrcodeContainer.querySelector("img");
+    if (!img) return;
+    const link = document.createElement("a");
+    link.href = img.src;
+    link.download = `qrcode_${modoAtual}.png`;
+    link.click();
+}
+
+function downloadBarcode() {
+    const svg = document.getElementById("barcode");
+    const xml = new XMLSerializer().serializeToString(svg);
+    const svg64 = btoa(xml);
+    const canvas = document.createElement("canvas");
+    const image = new Image();
+    image.src = 'data:image/svg+xml;base64,' + svg64;
+    image.onload = () => {
+        canvas.width = image.width;
+        canvas.height = image.height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        const link = document.createElement("a");
+        link.href = canvas.toDataURL("image/png");
+        link.download = `barcode_${modoAtual}.png`;
+        link.click();
+    };
+}
     if(modoAtual === 'instagram') link = `https://instagram.com/${v1.replace('@','')}`;
     if(modoAtual === 'email') link = `mailto:${v1}?subject=${encodeURIComponent(v2 || '')}`;
     if(modoAtual === 'wifi') link = `WIFI:T:WPA;S:${v1};P:${v2};;`;
