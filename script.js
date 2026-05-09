@@ -6,34 +6,82 @@ function configurar(modo) {
     document.querySelectorAll('.menu-botoes button').forEach(b => b.classList.remove('active'));
     document.getElementById(`btn-${modo}`).classList.add('active');
     
-    let placeholder = "Digite aqui...";
-    if(modo === 'pix') placeholder = "Chave PIX";
-    if(modo === 'whatsapp') placeholder = "5511999999999";
+    let ph = "Digite o texto ou nome...";
+    if(modo === 'pix') ph = "Chave PIX (CPF/E-mail)";
+    if(modo === 'whatsapp') ph = "DDD + Número (ex: 11999999999)";
     
-    container.innerHTML = `<input type="text" id="val1" placeholder="${placeholder}">`;
+    container.innerHTML = `<input type="text" id="val1" placeholder="${ph}">`;
 }
 
 function gerarTudo() {
-    const val1 = document.getElementById('val1').value.trim();
-    if (!val1) return alert("Digite algo!");
-
-    // Limpa o QR Code anterior antes de gerar
-    const qrDiv = document.getElementById("qrcode-canvas");
-    qrDiv.innerHTML = "";
+    const input = document.getElementById('val1');
+    const valor = input.value.trim();
     
-    new QRCode(qrDiv, { text: val1, width: 140, height: 140 });
+    if (!valor) {
+        alert("Por favor, preencha o campo!");
+        return;
+    }
 
-    // Gera o código de barras
-    JsBarcode("#barcode", val1.substring(0, 20), {
+    // --- SEGURANÇA: LIMPA OS CAMPOS ANTES DE GERAR ---
+    const qrDiv = document.getElementById("qrcode-canvas");
+    qrDiv.innerHTML = ""; // Remove o QR Code anterior
+    
+    // O JsBarcode limpa o SVG automaticamente, mas vamos garantir:
+    const svgBarras = document.getElementById("barcode");
+    svgBarras.innerHTML = ""; 
+
+    // --- GERAÇÃO DO QR CODE ---
+    let textoFinal = valor;
+    if(modoAtual === 'whatsapp') textoFinal = `https://wa.me/${valor.replace(/\D/g,'')}`;
+    if(modoAtual === 'instagram') textoFinal = `https://instagram.com/${valor.replace('@','')}`;
+    if(modoAtual === 'pix') textoFinal = `00020126330014BR.GOV.BCB.PIX0111${valor}5204000053039865802BR5910RECEBEDOR6006CIDADE62070503***6304`;
+
+    new QRCode(qrDiv, {
+        text: textoFinal,
+        width: 150,
+        height: 150
+    });
+
+    // --- GERAÇÃO DO CÓDIGO DE BARRAS ---
+    // Limitamos a 20 caracteres para as barras não ficarem gigantes no celular
+    JsBarcode("#barcode", valor.substring(0, 20), {
         format: "CODE128",
         width: 1.5,
-        height: 40,
-        displayValue: true
+        height: 50,
+        displayValue: true,
+        fontSize: 14
     });
 }
 
 function downloadQR() {
     const img = document.querySelector("#qrcode-canvas img");
+    if (!img) return alert("Gere o código primeiro!");
+    const link = document.createElement("a");
+    link.href = img.src;
+    link.download = "qrcode_marcio.png";
+    link.click();
+}
+
+function downloadBarcode() {
+    const svg = document.getElementById("barcode");
+    const xml = new XMLSerializer().serializeToString(svg);
+    const svg64 = btoa(unescape(encodeURIComponent(xml)));
+    const canvas = document.createElement("canvas");
+    const image = new Image();
+    image.src = 'data:image/svg+xml;base64,' + svg64;
+    image.onload = () => {
+        canvas.width = image.width;
+        canvas.height = image.height;
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "white"; // Fundo branco no download
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(image, 0, 0);
+        const link = document.createElement("a");
+        link.href = canvas.toDataURL("image/png");
+        link.download = "barras_marcio.png";
+        link.click();
+    };
+}
     if (!img) return;
     const link = document.createElement("a");
     link.href = img.src;
