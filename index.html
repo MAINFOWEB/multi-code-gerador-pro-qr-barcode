@@ -31,10 +31,27 @@
         <div class="resultado">
             <div class="box">
                 <h3>QR CODE</h3>
+                <!-- Apenas um espaço fixo -->
                 <div id="qrcode-canvas"></div>
                 <button class="btn-download" onclick="downloadQR()">Baixar QR</button>
             </div>
 
+            <div class="box">
+                <h3>CÓDIGO DE BARRAS</h3>
+                <!-- Apenas um espaço fixo -->
+                <div class="barcode-container">
+                    <svg id="barcode"></svg>
+                </div>
+                <button class="btn-download" onclick="downloadBarcode()">Baixar Barras</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
             <div class="box">
                 <h3>CÓDIGO DE BARRAS</h3>
                 <div class="barcode-container">
