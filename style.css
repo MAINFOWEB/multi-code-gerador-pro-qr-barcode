@@ -1,39 +1,102 @@
-* { box-sizing: border-box; }
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
 body {
-    font-family: sans-serif;
-    background: #0f0f1a;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #0a0a12;
     color: white;
     margin: 0;
-    padding: 10px;
+    padding: 15px;
     display: flex;
     justify-content: center;
-    overflow-x: hidden; /* Impede a barra de rolagem lateral */
 }
 
 .container {
-    background: #1a1a2e;
-    padding: 15px;
-    border-radius: 15px;
+    background: #161625;
+    padding: 20px;
+    border-radius: 20px;
     width: 100%;
-    max-width: 500px;
-    text-align: center;
+    max-width: 450px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
+
+h1 { font-size: 1.4rem; color: #00d2ff; margin-bottom: 20px; }
 
 .menu-botoes {
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
+    gap: 8px;
     justify-content: center;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 button {
-    padding: 8px;
-    border-radius: 5px;
+    padding: 10px 14px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background: #252538;
+    color: #ccc;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+button.active { background: #00d2ff; color: #000; font-weight: bold; border-color: #00d2ff; }
+
+.input-area input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 10px;
+    background: #000;
+    color: #00d2ff;
     border: 1px solid #444;
-    background: #2a2a40;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+.btn-gerar {
+    background: #00c853;
     color: white;
+    width: 100%;
+    padding: 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    margin: 10px 0 25px 0;
+}
+
+.resultado {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.box {
+    background: #fff;
+    padding: 15px;
+    border-radius: 15px;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.box h3 { font-size: 0.8rem; margin: 0 0 10px 0; color: #777; }
+
+#qrcode-canvas { background: white; padding: 5px; min-height: 128px; }
+#qrcode-canvas img { width: 150px; height: 150px; }
+
+.barcode-container { width: 100%; display: flex; justify-content: center; overflow: hidden; }
+#barcode { max-width: 100%; }
+
+.btn-download {
+    background: #1976d2;
+    color: white;
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px;
+    border: none;
+}
     font-size: 0.75rem;
     cursor: pointer;
 }
