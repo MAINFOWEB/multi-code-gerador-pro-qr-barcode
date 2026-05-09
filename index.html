@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Gerador Pro - Márcio BTI</title>
+    <title>Gerador Multi-Code Pro - Márcio</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,13 +14,16 @@
         <div class="menu-botoes">
             <button onclick="configurar('texto')" id="btn-texto" class="active">Texto</button>
             <button onclick="configurar('pix')" id="btn-pix">PIX</button>
-            <button onclick="configurar('wifi')" id="btn-wifi">Wi-Fi</button>
             <button onclick="configurar('whatsapp')" id="btn-whatsapp">WhatsApp</button>
+            <button onclick="configurar('wifi')" id="btn-wifi">Wi-Fi</button>
+            <button onclick="configurar('linkedin')" id="btn-linkedin">LinkedIn</button>
             <button onclick="configurar('instagram')" id="btn-instagram">Instagram</button>
+            <button onclick="configurar('facebook')" id="btn-facebook">Facebook</button>
+            <button onclick="configurar('email')" id="btn-email">E-mail</button>
         </div>
 
         <div class="input-area" id="campos-input">
-            <input type="text" id="val1" placeholder="Digite o texto ou nome...">
+            <input type="text" id="val1" placeholder="Digite seu nome ou texto...">
         </div>
 
         <button class="btn-gerar" onclick="gerarTudo()">GERAR AGORA</button>
@@ -34,6 +37,19 @@
 
             <div class="box">
                 <h3>CÓDIGO DE BARRAS</h3>
+                <div class="barcode-container">
+                    <svg id="barcode"></svg>
+                </div>
+                <button class="btn-download" onclick="downloadBarcode()">Baixar Barras</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
                 <div class="barcode-container">
                     <svg id="barcode"></svg>
                 </div>
