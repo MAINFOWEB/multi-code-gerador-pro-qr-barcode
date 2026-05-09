@@ -1,39 +1,107 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 100%);
+    font-family: 'Segoe UI', sans-serif;
+    background: #0f0f1a;
     color: white;
     margin: 0;
     display: flex;
     justify-content: center;
-    padding: 40px 20px;
+    padding: 20px;
     min-height: 100vh;
 }
 
 .container {
-    background: rgba(25, 25, 35, 0.95);
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+    background: #1a1a2e;
+    padding: 20px;
+    border-radius: 15px;
     width: 100%;
-    max-width: 850px;
+    max-width: 600px; /* Limita o tamanho no PC */
+    box-sizing: border-box;
     text-align: center;
-    border: 1px solid #333;
 }
-
-h1 { color: #00d2ff; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 2px; }
-.subtitle { color: #aaa; font-size: 0.9rem; margin-bottom: 25px; }
 
 .menu-botoes {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     justify-content: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 button {
-    padding: 10px 15px;
+    padding: 8px 12px;
+    border-radius: 5px;
     border: 1px solid #444;
+    background: #2a2a40;
+    color: white;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+button.active { background: #00d2ff; color: #000; border-color: #00d2ff; }
+
+.input-area input {
+    width: 100%;
+    padding: 12px;
+    margin: 5px 0;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background: #000;
+    color: white;
+    box-sizing: border-box;
+}
+
+.btn-gerar {
+    background: #00c853;
+    width: 100%;
+    padding: 15px;
+    font-weight: bold;
+    margin-top: 15px;
+    border: none;
+    border-radius: 8px;
+}
+
+/* AQUI ESTÁ A CORREÇÃO DO ESPAÇO GRANDE */
+.resultado {
+    display: flex;
+    flex-direction: column; /* Um embaixo do outro no celular */
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.box {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Ocupa a largura disponível sem esticar */
+    box-sizing: border-box;
+}
+
+#qrcode-canvas, .barcode-container {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+}
+
+svg#barcode {
+    max-width: 100%; /* Impede o código de barras de fugir da tela */
+}
+
+.btn-download {
+    background: #1976d2;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+/* Para telas maiores (PC), eles ficam lado a lado novamente */
+@media (min-width: 600px) {
+    .resultado { flex-direction: row; }
+    .box { width: calc(50% - 8px); }
+}
     border-radius: 6px;
     cursor: pointer;
     background: #2a2a2a;
