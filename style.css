@@ -65,6 +65,37 @@ button.active { background: #00d2ff; color: #000; font-weight: bold; }
 #qrcode-canvas img { width: 150px; height: 150px; }
 .barcode-container { width: 100%; display: flex; justify-content: center; overflow: hidden; }
 #barcode { max-width: 100%; }
+.btn-download { background: #1976d2; color: white; width: 100%; margin-top: 10px; padding: 10px; border: none; }    width: 100%;
+    padding: 12px;
+    margin-bottom: 8px;
+    background: #000;
+    color: #00d2ff;
+    border: 1px solid #444;
+    border-radius: 8px;
+}
+.btn-gerar {
+    background: #00c853;
+    color: white;
+    width: 100%;
+    padding: 15px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.resultado { display: flex; flex-direction: column; gap: 15px; }
+.box {
+    background: #fff;
+    padding: 15px;
+    border-radius: 15px;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#qrcode-canvas img { width: 150px; height: 150px; }
+.barcode-container { width: 100%; display: flex; justify-content: center; overflow: hidden; }
+#barcode { max-width: 100%; }
 .btn-download { background: #1976d2; color: white; width: 100%; margin-top: 10px; padding: 10px; border: none; }
     color: #ccc;
     font-size: 0.8rem;
