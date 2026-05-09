@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador Multi-Code Pro - BTI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Gerador de Códigos</h1>
+        <p class="subtitle">Selecione o tipo de dado, gere e baixe seus códigos.</p>
+        
+        <div class="menu-botoes">
+            <button onclick="configurar('texto')" id="btn-texto" class="active">Texto/Nome</button>
+            <button onclick="configurar('wifi')" id="btn-wifi">Wi-Fi</button>
+            <button onclick="configurar('whatsapp')" id="btn-whatsapp">WhatsApp</button>
+            <button onclick="configurar('linkedin')" id="btn-linkedin">LinkedIn</button>
+            <button onclick="configurar('facebook')" id="btn-facebook">Facebook</button>
+            <button onclick="configurar('instagram')" id="btn-instagram">Instagram</button>
+            <button onclick="configurar('email')" id="btn-email">E-mail</button>
+        </div>
+
+        <div class="input-area" id="campos-input">
+            <input type="text" id="main-input" placeholder="Digite o nome ou texto...">
+        </div>
+
+        <div class="acoes">
+            <button class="btn-gerar" onclick="gerarTudo()">GERAR QR & BARRAS</button>
+        </div>
+
+        <div class="resultado">
+            <div class="box">
+                <h3>QR CODE</h3>
+                <div id="qrcode-canvas"></div>
+                <button class="btn-download" onclick="downloadQR()">Baixar QR Code</button>
+            </div>
+
+            <div class="box">
+                <h3>CÓDIGO DE BARRAS</h3>
+                <div class="barcode-container">
+                    <svg id="barcode"></svg>
+                </div>
+                <button class="btn-download" onclick="downloadBarcode()">Baixar Barcode</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
