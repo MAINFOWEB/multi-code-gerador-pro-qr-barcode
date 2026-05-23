@@ -1,11 +1,4 @@
-/*
- * Multi code gerador pro qr barcode
- * Copyright (C) 2026 [Marcio Alexandre O. Ferreira]
- * * Este programa é um software livre: você pode redistribuí-lo e/ou modificá-lo
- * sob os termos da Licença Pública Geral GNU conforme publicada pela
- * Free Software Foundation, tanto a versão 3 da licença, ou (a seu critério)
- * qualquer versão posterior.
- */
+
 let modoAtual = 'texto';
 const qrcodeContainer = document.getElementById("qrcode-canvas");
 
